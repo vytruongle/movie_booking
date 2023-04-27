@@ -1,20 +1,27 @@
 /* eslint-disable no-useless-escape */
 import { Tabs } from "antd";
 import React, { useEffect } from "react";
+import dateFormat from "dateformat";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { update } from "../store/manageUser/thunkAction";
+import { update, bookingHistory } from "../store/manageUser/thunkAction";
 
 const User = () => {
-  const { user, avatar, pwd } = useSelector((state) => state.manageUser);
+  const { user, avatar, pwd, bookingList } = useSelector(
+    (state) => state.manageUser
+  );
   const dispacth = useDispatch();
-
+  console.log(bookingList);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+
+  useEffect(() => {
+    dispacth(bookingHistory());
+  }, [dispacth]);
 
   useEffect(() => {
     if (user) return reset({ ...user, soDt: user.soDT, matKhau: pwd });
@@ -255,6 +262,61 @@ const User = () => {
     );
   };
 
+  const renderListBooking = (item) => {
+    return (
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-white text-lg font-semibold">{item.tenPhim}</h1>
+          <p className="text-sm text-gray-400">
+            <span className="text-white font-semibold">Ngày đặt vé:</span>{" "}
+            {dateFormat(item.ngayDat, "dd/mm/yyyy")}
+          </p>
+          <p className="text-sm text-gray-400">
+            <span className="text-white font-semibold">Thời lượng phim:</span>{" "}
+            {item.thoiLuongPhim} phút
+          </p>
+        </div>
+        <div>
+          <h1 className="text-white text-xl font-bold mb-3">
+            Danh sách ghế đã đặt
+          </h1>
+          {item?.danhSachGhe.map((infoChair) => {
+            return (
+              <p
+                className="text-md text-gray-400"
+                key={infoChair.maGhe - infoChair.maRap}
+              >
+                {infoChair.tenHeThongRap} - {infoChair.tenCumRap} -{" "}
+                {infoChair.tenRap} - {infoChair.tenGhe}
+              </p>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const tabsListBooking = () => {
+    return (
+      <Tabs
+        items={bookingList?.map((item) => {
+          return {
+            key: item.maVe,
+            label: (
+              <img
+                src={item.hinhAnh}
+                alt={item.hinhAnh}
+                className="w-[70px] h-[70px] object-cover rounded-[50%]"
+              />
+            ),
+            children: renderListBooking(item),
+          };
+        })}
+        tabPosition="left"
+      />
+    );
+  };
+
   const items = [
     {
       key: 1,
@@ -272,6 +334,12 @@ const User = () => {
         </p>
       ),
       children: renderDetailInfo(),
+    },
+
+    {
+      key: 3,
+      label: <p className="text-white text-lg font-semibold">Lịch sử đặt vé</p>,
+      children: tabsListBooking(),
     },
   ];
 

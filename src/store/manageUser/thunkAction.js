@@ -31,3 +31,17 @@ export const update = createAsyncThunk(
     }
   }
 );
+
+export const bookingHistory = createAsyncThunk(
+  "manageUser/bookingHistory",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await manageUser.bookingHistory(payload);
+      if (res?.data.statusCode === 200) {
+        return res?.data?.content;
+      }
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);

@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, update } from "./thunkAction";
+import { login, update, bookingHistory } from "./thunkAction";
 import avatar from "../../data/image/han-so-hee-wallpaper-11.jpg";
 
 const initialState = {
   user: undefined,
   avatar: avatar,
   pwd: "",
+  bookingList: [],
 };
 
 const userSlice = createSlice({
@@ -41,6 +42,10 @@ const userSlice = createSlice({
       .addCase(update.fulfilled, (state, action) => {
         state.user = action.payload;
         localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+
+      .addCase(bookingHistory.fulfilled, (state, action) => {
+        state.bookingList = action.payload?.thongTinDatVe;
       });
   },
 });

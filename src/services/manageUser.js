@@ -5,4 +5,6 @@ export const manageUser = {
   loginUser: (payload) => http.post("/QuanLyNguoiDung/DangNhap", payload),
   updateUser: (payload) =>
     http.put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", payload),
+  bookingHistory: (payload) =>
+    http.post("/QuanLyNguoiDung/ThongTinTaiKhoan", payload),
 };

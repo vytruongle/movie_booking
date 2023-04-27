@@ -11,6 +11,7 @@ const MovieDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {user} = useSelector((state) => state.manageUser)
   const { movieInfo } = useSelector((state) => state.manageMovie);
   const { dateInfo } = useSelector((state) => state.manageCinema);
 
@@ -18,6 +19,15 @@ const MovieDetail = () => {
     dispatch(getMovieInfo(`?MaPhim=${params.movieId}`));
     dispatch(getDateMovieInfo(`?MaPhim=${params.movieId}`));
   }, [dispatch, params]);
+
+  const handleBooking = (value) => {
+    if(user) {
+      navigate(`/ticketroom/${value.maLichChieu}`);
+    } else {
+      navigate('/login')
+    }
+    
+  }
 
   const renderDetailCinema = (theaterCluster) => {
     return theaterCluster?.map((item) => {
@@ -50,7 +60,7 @@ const MovieDetail = () => {
                     <button
                       className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                       onClick={() => {
-                        navigate(`/ticketroom/${value.maLichChieu}`);
+                        handleBooking(value)
                       }}
                     >
                       <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

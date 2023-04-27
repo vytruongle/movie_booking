@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BookingMovie } from "./thunkAction";
+import { BookingTicket, ListTicketRoom } from "./thunkAction";
 
 const initialState = {
   listRoom: [],
   listChairBooking: [],
   isLoading: false,
+  isBooking: false,
 };
 
 const BookingSlice = createSlice({
@@ -18,17 +19,24 @@ const BookingSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(BookingMovie.pending, (state) => {
+      .addCase(ListTicketRoom.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(BookingMovie.fulfilled, (state, action) => {
+      .addCase(ListTicketRoom.fulfilled, (state, action) => {
         state.listRoom = action.payload;
+        state.isBooking = false
         state.isLoading = false;
       })
-      .addCase(BookingMovie.rejected, (state) => {
+      .addCase(ListTicketRoom.rejected, (state) => {
         state.isLoading = true;
         console.log(`error`);
-      });
+      })
+      // check booking ticket
+      .addCase(BookingTicket.fulfilled, (state, action) => {
+        state.listChairBooking = []
+        state.isBooking = true
+      })
+
   },
 });
 

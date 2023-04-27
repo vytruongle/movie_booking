@@ -75,6 +75,7 @@ const Login = () => {
       <div className="flex flex-col items-center py-8">
         <p className="text-black text-4xl font-semibold">Login</p>
         {renderLogin()}
+        <p>Don't have an account? <a href="/register" className="font-semibold text-red-500 text-xl hover:text-red-400">Register!</a></p>
       </div>
     </div>
   );

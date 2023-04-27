@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Tooltip, Tabs } from "antd";
 import dateFormat from "dateformat";
+import clsx from "clsx";
 
 // image carousel
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,8 @@ import { getBannerList, getMovieList } from "../store/getMovieList/thunkAction";
 
 import { getDateInfo } from "../store/getCinemaList/thunkAction";
 import { useNavigate } from "react-router-dom";
+//css
+import styles from "../sass/components/Loader.module.scss";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,7 +29,62 @@ const Home = () => {
   }, [dispatch]);
 
   if (isLoading) {
-    return <p className="text-black">...Loading</p>;
+    return (
+      <div className={clsx(styles.container)}>
+        <div className={clsx(styles.top)}>
+          <div className={clsx(styles.square)}>
+            <div className={clsx(styles.square)}>
+              <div className={clsx(styles.square)}>
+                <div className={clsx(styles.square)}>
+                  <div className={clsx(styles.square)}>
+                    <div className={clsx(styles.square)}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={clsx(styles.bottom)}>
+          <div className={clsx(styles.square)}>
+            <div className={clsx(styles.square)}>
+              <div className={clsx(styles.square)}>
+                <div className={clsx(styles.square)}>
+                  <div className={clsx(styles.square)}>
+                    <div className={clsx(styles.square)}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={clsx(styles.left)}>
+          <div className={clsx(styles.square)}>
+            <div className={clsx(styles.square)}>
+              <div className={clsx(styles.square)}>
+                <div className={clsx(styles.square)}>
+                  <div className={clsx(styles.square)}>
+                    <div className={clsx(styles.square)}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={clsx(styles.right)}>
+          <div className={clsx(styles.square)}>
+            <div className={clsx(styles.square)}>
+              <div className={clsx(styles.square)}>
+                <div className={clsx(styles.square)}>
+                  <div className={clsx(styles.square)}>
+                    <div className={clsx(styles.square)}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   // render info for coming movie list
   const renderInfoMovie = () => {
@@ -45,7 +103,7 @@ const Home = () => {
           <img
             src={movieList[sel]?.hinhAnh}
             alt={movieList[sel]?.hinhAnh}
-            className="w-full h-[500px]  rounded-lg object-fill"
+            className="w-full h-[480px]  rounded-lg object-fill"
           />
         </div>
       </div>
@@ -115,6 +173,9 @@ const Home = () => {
               <button
                 type="button"
                 className="w-1/2 text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                onClick={() => {
+                  navigate(`/detail/${item.maPhim}`);
+                }}
               >
                 Xem thêm
               </button>
@@ -160,6 +221,7 @@ const Home = () => {
                 return (
                   <Tooltip title={item.tenPhim} key={item.maPhim}>
                     <div
+                      className="cursor-pointer"
                       onClick={() => {
                         navigate(`/detail/${item.maPhim}`);
                       }}
