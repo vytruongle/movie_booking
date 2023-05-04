@@ -6,12 +6,10 @@ const TokenCyberSoft =
 
 const baseURL = `https://movienew.cybersoft.edu.vn/api/`;
 
-const data = localStorage.getItem("user");
-let tokenAccess = data
-  ? JSON.parse(localStorage.getItem("user")).accessToken
-  : "";
+let data = localStorage.getItem("user");
+let tokenAccess = data ? JSON.parse(data).accessToken : "";
 
-console.log(tokenAccess);
+console.log(tokenAccess, data);
 const http = axios.create();
 
 http.interceptors.request.use((config) => {

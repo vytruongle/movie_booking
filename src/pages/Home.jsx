@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBannerList, getMovieList } from "../store/getMovieList/thunkAction";
 
 import { getDateInfo } from "../store/getCinemaList/thunkAction";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 //css
 import styles from "../sass/components/Loader.module.scss";
 
@@ -20,6 +20,11 @@ const Home = () => {
   );
   const { releaseList } = useSelector((state) => state.manageCinema);
   const navigate = useNavigate();
+
+  if (window.location.href.substr(-2) !== "?r") {
+    window.location = window.location.href + "?r";
+  }
+
   useEffect(() => {
     dispatch(
       getMovieList({ movieList: "?maNhom=GP11", comingList: "?maNhom=GP09" })

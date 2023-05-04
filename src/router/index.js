@@ -20,11 +20,11 @@ const Router = () => {
           element: <Home />,
         },
         {
-          path: "contact",
+          path: "/",
           element: <Contact />,
         },
         {
-          path: "news",
+          path: "/",
           element: <News />,
         },
         {
