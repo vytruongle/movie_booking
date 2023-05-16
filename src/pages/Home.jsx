@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBannerList, getMovieList } from "../store/getMovieList/thunkAction";
 
 import { getDateInfo } from "../store/getCinemaList/thunkAction";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //css
 import styles from "../sass/components/Loader.module.scss";
 
@@ -27,11 +27,13 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(
-      getMovieList({ movieList: "?maNhom=GP11", comingList: "?maNhom=GP09" })
+      getMovieList({ movieList: "?maNhom=GP03", comingList: "?maNhom=GP09" })
     );
     dispatch(getBannerList());
-    dispatch(getDateInfo("?maNhom=GP11"));
+    dispatch(getDateInfo("?maNhom=GP03"));
   }, [dispatch]);
+
+  console.log(movieList);
 
   if (isLoading) {
     return (
